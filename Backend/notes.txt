@@ -1,0 +1,13 @@
+Backend
+Sign UP
+Sign IN
+Add new content
+Fetching all existing documentation
+Delete a documentation
+Create a Shareable link
+
+notion="https://petal-estimate-4e9.notion.site/Building-a-second-brain-app-1407dfd1073580c19ac3cbe9afa9ac27"
+
+button color = 300:"#e0e7fe" 
+500:"#3e38a7";
+600:"#5046e4"
