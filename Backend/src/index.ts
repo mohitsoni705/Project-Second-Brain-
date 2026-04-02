@@ -1,3 +1,4 @@
+
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { ContentModel, LinkModel, UserModel } from './db.js';
@@ -6,6 +7,8 @@ import { JWT_PASSWORD } from './config.js';
 import { UserMiddleware } from './middleware.js';
 import { random } from './utils.js';
 import cors from 'cors';
+
+const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 
 const app = express();
 app.use(express.json());
@@ -16,10 +19,15 @@ app.post("/api/v1/signup",async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
     
-   try{await UserModel.create({
+   try{
+    const newUser = new UserModel({
         username:username,
         password:password
     })
+
+
+    const savedUser = await newUser.save();
+    console.log(savedUser);
     res.json({
         message:"User signed up"
     })
@@ -37,7 +45,7 @@ app.post("/api/v1/signin",async(req,res)=>{
     if(ExistingUser){
         const token = jwt.sign({
             id:ExistingUser._id
-        },JWT_PASSWORD)
+        },JWT_SECRET)
         res.json({
             token
         })
@@ -51,7 +59,7 @@ app.post("/api/v1/content",UserMiddleware,async(req,res)=>{
     const link = req.body.link;
     const title = req.body.title;
     try{
-        ContentModel.create({
+        const newContent = new ContentModel({
         link:link,
         title:title,
         //@ts-ignore
@@ -59,6 +67,11 @@ app.post("/api/v1/content",UserMiddleware,async(req,res)=>{
         tags:[],
         type:req.body.type  
     })
+
+
+    const savedContent = await newContent.save();
+
+    console.log(savedContent);
     res.json({
         message:"Content added"
     })
@@ -79,14 +92,17 @@ app.get("/api/v1/content", UserMiddleware , async(req,res)=>{
         content
     })
 })
-app.delete("/api/v1/content",UserMiddleware,async(req,res)=>{
+app.delete("/api/v1/content/:id",UserMiddleware,async(req,res)=>{
 
     const contentId = req.params.id;
-    await ContentModel.deleteMany({
+    const deleted = await ContentModel.deleteOne({
         _id:contentId,
         //@ts-ignore
         userId:req.userId
     })
+    if (!deleted) {
+    return res.status(404).json({ message: "Content not found" });
+    }
     res.json({
         message:"Content Has been deleted"
     })
@@ -157,5 +173,5 @@ app.get("/api/v1/brain/:shareLink",async(req,res)=>{
 });
 
 app.listen(8000,()=>{
-    console.log("Server started on port 8000");
+    console.log(`Server started on port ${8000}`);
 });

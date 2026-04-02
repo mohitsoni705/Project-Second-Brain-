@@ -1,7 +1,20 @@
 import mongoose , {model , Schema} from "mongoose";
 
+ const url = "mongodb+srv://mohitworkru_db_user:gWnKeBmhTn5VGzEM@brainly.7zxs48l.mongodb.net/?appName=brainly"
+const connectDB = async() =>{
 
-mongoose.connect("mongodb://localhost:27017/brainly");
+    try{
+
+      await mongoose.connect(url);
+        console.log("Mongodb Connected!");
+    }
+    catch(e){
+
+        console.log(e);
+    }
+}
+
+connectDB();
 
 const UserSchema = new Schema({
     username:{type:String, unique:true},

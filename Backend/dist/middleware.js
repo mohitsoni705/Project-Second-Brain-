@@ -1,13 +1,13 @@
-import { JWT_PASSWORD } from './config.js';
 import jwt from "jsonwebtoken";
+const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 export const UserMiddleware = (req, res, next) => {
     const header = req.headers["authorization"];
     if (!header) {
         return res.status(401).json({ message: "No header" });
     }
-    const token = header; // ✅ extract token correctly
+    const token = header.split("")[1];
     try {
-        const decoded = jwt.verify(token, JWT_PASSWORD);
+        const decoded = jwt.verify(token, JWT_SECRET);
         //@ts-ignore
         req.userId = decoded.id;
         next();

@@ -3,7 +3,8 @@ import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Logo } from '../icons/Logo';
 
 const Signin = () => {
   const usernameRef = useRef<any>("");
@@ -22,16 +23,32 @@ const Signin = () => {
         navigate("/dashboard");  
     }
   return (
-    <div className='h-screen w-screen bg-gray-200 flex justify-center items-center'>
-        <div className='bg-white rounded-xl border min-w-48 p-8'>
-            <Input placeholder="Username" refrence={usernameRef} />
-            <Input placeholder="Password" refrence={passwordRef}/>
-            <div className='flex justify-center pt-4'>
-            <Button variant="primary" 
-            text="Signin" size="md" fullWidth={true} onClick={signin}/>
+    <div className='h-screen w-screen bg-gray-200 flex flex-row justify-center items-center'>
+            <div className='bg-[#5046e4] h-screen flex justify-center items-center flex-col w-full '>
+                <div className='text-black-600'><Logo size={6}/></div>
+                <h1 className="font-bold text-6xl text-white">Brainly</h1>
+                <p className='text-white text-2xl mt-1 '>Build With ❤️</p>
+                <p className='text-white text-2xl '>By Mohit Parmar Soni</p>
             </div>
-        </div>
-    </div> 
+            <div className='bg-blue-100 h-screen flex items-center justify-center w-full '>
+            <div className='bg-white rounded-sm border border-blue-300 shadow-2xl min-w-48 p-8'>
+                <div className='p-6'>
+                <h1 className='text-2xl items-center font-semibold text-center'>Login Account</h1>
+                <p className='text-gray-500 text-center font-extralight'>Sign in to continue Brainly</p>
+                </div>
+                <Input placeholder="Username" refrence={usernameRef}/>
+                <Input placeholder="Password"refrence={passwordRef}/>
+                <div className='flex justify-center pt-4'>
+                <Button variant="primary" 
+                text="Signin" size="md" fullWidth={true} onClick={signin} />
+                </div>
+                <div className='flex gap-1 p-2'>
+                    <p className='text-gray-400 '>Create a new account </p>
+                    <Link to="/signup" className='text-purple-400 font-semibold'>Signup</Link>
+                </div>
+            </div>
+            </div>
+        </div> 
   )
 }
 
