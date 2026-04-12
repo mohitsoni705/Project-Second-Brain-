@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
 const url = `${process.env.MONGO_URL}brainly`
 const connectDB = async() =>{
     try{

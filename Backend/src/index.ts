@@ -13,7 +13,7 @@ const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+console.log("MONGO_URL:", process.env.MONGO_URL);
 
 app.post("/api/v1/signup",async(req,res)=>{
     const username = req.body.username;

@@ -10,6 +10,7 @@ const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 const app = express();
 app.use(express.json());
 app.use(cors());
+console.log("MONGO_URL:", process.env.MONGO_URL);
 app.post("/api/v1/signup", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -25,27 +26,31 @@ app.post("/api/v1/signup", async (req, res) => {
         });
     }
     catch (err) {
-        res.status(411).json({
-            message: "User alreay exists",
-            error: err
+        res.status(409).json({
+            message: "User already exists",
+            error: err.message
         });
     }
 });
 app.post("/api/v1/signin", async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const ExistingUser = await UserModel.findOne({ username, password });
-    if (ExistingUser) {
-        const token = jwt.sign({
-            id: ExistingUser._id
-        }, JWT_SECRET);
-        res.json({
-            token
-        });
+    try {
+        const username = req.body.username;
+        const password = req.body.password;
+        const ExistingUser = await UserModel.findOne({ username, password });
+        if (ExistingUser) {
+            const token = jwt.sign({ id: ExistingUser._id }, JWT_SECRET);
+            return res.json({ token });
+        }
+        else {
+            return res.status(403).json({
+                message: "Incorrect Credentials"
+            });
+        }
     }
-    else {
-        res.status(403).json({
-            "message": "Incorrect Credentials"
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Internal server error"
         });
     }
 });
