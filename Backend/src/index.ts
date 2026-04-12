@@ -24,37 +24,45 @@ app.post("/api/v1/signup",async(req,res)=>{
         username:username,
         password:password
     })
-
-
     const savedUser = await newUser.save();
     console.log(savedUser);
     res.json({
         message:"User signed up"
     })
-}catch(err){
-    res.status(411).json({
-        message:"User alreay exists",
-        error:err
-    })
+}catch(err:any){
+    res.status(409).json({   // 409 = Conflict (correct for duplicate user)
+    message: "User already exists",
+    error: err.message
+})
 }
 })
-app.post("/api/v1/signin",async(req,res)=>{
+app.post("/api/v1/signin", async (req, res) => {
+  try {
     const username = req.body.username;
     const password = req.body.password;
-    const ExistingUser = await UserModel.findOne({username,password});
-    if(ExistingUser){
-        const token = jwt.sign({
-            id:ExistingUser._id
-        },JWT_SECRET)
-        res.json({
-            token
-        })
-    }else{
-        res.status(403).json({
-            "message":"Incorrect Credentials"
-        })
+
+    const ExistingUser = await UserModel.findOne({ username, password });
+
+    if (ExistingUser) {
+      const token = jwt.sign(
+        { id: ExistingUser._id },
+        JWT_SECRET
+      );
+
+      return res.json({ token });
+    } else {
+      return res.status(403).json({
+        message: "Incorrect Credentials"
+      });
     }
-})
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Internal server error"
+    });
+  }
+});
 app.post("/api/v1/content",UserMiddleware,async(req,res)=>{
     const link = req.body.link;
     const title = req.body.title;
