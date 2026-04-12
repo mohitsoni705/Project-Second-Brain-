@@ -35,5 +35,3 @@ const LinkSchema = new Schema({
 export const UserModel = model("User",UserSchema);
 export const LinkModel = model("Link",LinkSchema)
 export const ContentModel = model("Content",ContentSchema)
-
-mongoose.set("bufferCommands", false);
