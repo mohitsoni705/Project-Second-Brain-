@@ -23,8 +23,8 @@ const Signin = () => {
         navigate("/dashboard");  
     }
   return (
-    <div className='h-screen w-screen bg-gray-200 flex flex-row justify-center items-center'>
-            <div className='bg-[#5046e4] h-screen flex justify-center items-center flex-col w-full '>
+    <div className='min-h-screen bg-gray-200 flex flex-row justify-center items-center'>
+            <div className='bg-[#5046e4] h-screen hidden md:flex justify-center items-center flex-col w-full '>
                 <div className='text-black-600'><Logo size={6}/></div>
                 <h1 className="font-bold text-6xl text-white">Brainly</h1>
                 <p className='text-white text-2xl mt-1 '>Build With ❤️</p>

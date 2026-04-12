@@ -12,14 +12,18 @@ interface CardProps{
 }
 export const Card = ({title,link , type , contentId}:CardProps) =>{
 
-    const handleDeletePostButton=async()=>{
-         
+    const handleDeletePostButton=async()=>{    
         await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`,{
          headers:{
-            authorization:`Bearer ${localStorage.getItem("token")}`
+            authorization:`${localStorage.getItem("token")}`
         }
     }
     )   
+    }
+    const handleShareButton=async()=>{
+        await axios.get(`${BACKEND_URL}/api/v1/content${contentId}`,{
+
+        })
     }
     return <div>
         <div className="p-8 bg-white rounded-md border border-gray-200 max-w-72 min-h-48 transition-all ">

@@ -8,11 +8,15 @@ import { Card } from "../components/ui/Card";
 import { useContent } from "../hooks/useContent";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { Logo } from "../icons/Logo";
+import LogOutIcon from "../icons/LogOutIcon";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sharing, setSharing] = useState(false);
   const { contents, refresh } = useContent();
+  const navigate = useNavigate();
 
   const handleShare = async () => {
     try {
@@ -23,7 +27,7 @@ export const Dashboard = () => {
         { share: true },
         {
           headers: {
-            Authorization: `  ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         }
       );
@@ -39,12 +43,28 @@ export const Dashboard = () => {
       setSharing(false);
     }
   };
-
+const handleLogoutButton=()=>{
+       localStorage.removeItem("token");
+       navigate("/signin");
+  }
   return (
-    <div>
-      <SideBar />
-
-      <div className="p-4 ml-72 min-h-screen bg-gray-200">
+    <div className="flex flex-col">
+      
+      {/* Sidebar - hidden on mobile */}
+      <div className="hidden md:block">
+        <SideBar />
+      </div>
+      {/* {side bar mobile nav} */}
+      <div className="flex items-center justify-center gap-2 bg-gray-200 md:hidden p-3">
+        <div className='text-[#5046e4]'><Logo si={6}/></div>
+        <h1 className="font-bold text-[#5046e4] text-xl">Brainly</h1>
+        <div className="text-[#5046e4]" onClick={handleLogoutButton}>
+          <LogOutIcon/>
+        </div>
+      </div>
+      {/* Main Content */}
+      <div className="flex-1 p-4 md:ml-72 min-h-screen bg-gray-200">
+        
         <CreateContentModal
           open={modalOpen}
           onClose={() => {
@@ -53,7 +73,9 @@ export const Dashboard = () => {
           }}
         />
 
-        <div className="flex justify-end gap-4 mb-4">
+        {/* Top Actions */}
+        <div className="flex flex-col sm:flex-row justify-between sm:justify-end gap-3 mb-4">
+          
           <Button
             variant="primary"
             startIcon={<PlusIcon size="md" />}
@@ -71,11 +93,19 @@ export const Dashboard = () => {
           />
         </div>
 
-        <div className="flex gap-4 flex-wrap">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {contents.map(({ title, type, link, _id }) => (
-            <Card contentId={_id} key={_id} title={title} type={type} link={link} />
+            <Card
+              contentId={_id}
+              key={_id}
+              title={title}
+              type={type}
+              link={link}
+            />
           ))}
         </div>
+
       </div>
     </div>
   );

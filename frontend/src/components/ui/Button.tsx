@@ -21,7 +21,7 @@ const sizeStyles ={
     "md":"p-4",
     "lg":"p-6"
 }
-const defaultStyles = "rounded-md flex px-4 py-2 font-normal justify-center cursor-pointer items-center"
+const defaultStyles = "rounded-md flex px-4 py-2 font-normal justify-center cursor-pointer items-center "
 
    
 export const Button = (props:ButtonProps) =>{

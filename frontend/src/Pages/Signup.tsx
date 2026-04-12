@@ -26,8 +26,8 @@ const Signup = () => {
         }
     }
   return (
-    <div className='h-screen w-screen bg-gray-200 flex flex-row justify-center items-center transition-all'>
-        <div className='bg-[#5046e4] h-screen flex justify-center items-center flex-col w-full '>
+    <div className='min-h-screen w-full bg-gray-200 flex flex-col md:flex-row transition-all'>
+        <div className='hidden md:flex bg-[#5046e4] h-screen flex-col justify-center items-center w-full'>
             <div className='text-white'><Logo si={20}/></div>
             <h1 className="font-bold text-6xl text-white">Brainly</h1>
             <p className='text-white text-2xl mt-1 '>Build With ❤️</p>
