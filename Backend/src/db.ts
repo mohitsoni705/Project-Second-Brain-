@@ -5,10 +5,9 @@ dotenv.config();
 
 
 const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`
-mongoose.set("bufferCommands", false);
 export const connectDB = async() =>{
     try{
-      await mongoose.connect(url);
+        await mongoose.connect(url);
         console.log("Mongodb Connected!");
     }
     catch(e){
@@ -36,3 +35,5 @@ const LinkSchema = new Schema({
 export const UserModel = model("User",UserSchema);
 export const LinkModel = model("Link",LinkSchema)
 export const ContentModel = model("Content",ContentSchema)
+
+mongoose.set("bufferCommands", false);
