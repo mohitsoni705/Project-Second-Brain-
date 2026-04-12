@@ -20,11 +20,6 @@ export const Card = ({title,link , type , contentId}:CardProps) =>{
     }
     )   
     }
-    const handleShareButton=async()=>{
-        await axios.get(`${BACKEND_URL}/api/v1/content${contentId}`,{
-
-        })
-    }
     return <div>
         <div className="p-8 bg-white rounded-md border border-gray-200 max-w-72 min-h-48 transition-all ">
             <div className="flex justify-between">

@@ -4,7 +4,6 @@ import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { Button } from "./Button";
 import SidebarItem from "./SidebarItem";
-import LogOutIcon from "../../icons/LogOutIcon";
 
 const SideBar = () => {
   const navigate = useNavigate();
