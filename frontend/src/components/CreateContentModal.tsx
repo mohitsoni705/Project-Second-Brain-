@@ -8,8 +8,12 @@ import axios from "axios"
 enum ContentType{
   Youtube = "youtube",
   Twitter = "twitter"
-}   
-export const CreateContentModal=({open , onClose}:any)=>{
+}  
+type Props = {
+  open: boolean;
+  onClose: () => void;
+}; 
+export const CreateContentModal=({open , onClose}:Props)=>{
     const titleRef = useRef<any>("")
     const linkRef = useRef<any>("")
     const [type,setType] = useState("youtube");
