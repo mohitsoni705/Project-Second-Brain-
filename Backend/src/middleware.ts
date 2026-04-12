@@ -10,7 +10,7 @@ export const UserMiddleware = (req: Request, res: Response, next: NextFunction) 
     if (!header) {
         return res.status(401).json({ message: "No header" });
     }
-    const token = header.split("")[1];
+    const token = header;
 
     try {
         const decoded = jwt.verify(token as string, JWT_SECRET);

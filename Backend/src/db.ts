@@ -1,6 +1,6 @@
 import mongoose , {model , Schema} from "mongoose";
 
- const url = "mongodb+srv://mohitworkru_db_user:gWnKeBmhTn5VGzEM@brainly.7zxs48l.mongodb.net/?appName=brainly"
+ const url = "mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly"
 const connectDB = async() =>{
 
     try{
