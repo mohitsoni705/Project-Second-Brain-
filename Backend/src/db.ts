@@ -3,21 +3,18 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`
-const connectDB = async() =>{
-    try{
 
+const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`
+mongoose.set("bufferCommands", false);
+export const connectDB = async() =>{
+    try{
       await mongoose.connect(url);
         console.log("Mongodb Connected!");
     }
     catch(e){
-
         console.log(e);
     }
 }
-
-connectDB();
-
 const UserSchema = new Schema({
     username:{type:String, unique:true},
     password:{type:String},

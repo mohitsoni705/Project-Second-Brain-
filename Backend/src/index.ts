@@ -1,7 +1,7 @@
 
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { ContentModel, LinkModel, UserModel } from './db.js';
+import { connectDB, ContentModel, LinkModel, UserModel } from './db.js';
 import mongoose from 'mongoose';
 import { JWT_PASSWORD } from './config.js'; 
 import { UserMiddleware } from './middleware.js';
@@ -15,6 +15,19 @@ app.use(express.json());
 app.use(cors());
 console.log("MONGO_URL:", process.env.MONGO_URL);
 
+async function startSever(){
+
+    try{
+       await connectDB();
+
+       app.listen(8000,()=>{
+        console.log(`Server started on port ${8000}`);
+      });
+    }catch(err){
+        console.error("Db Connection fail",err);
+    }
+}
+startSever();
 app.post("/api/v1/signup",async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
@@ -180,6 +193,7 @@ app.get("/api/v1/brain/:shareLink",async(req,res)=>{
     })
 });
 
-app.listen(8000,()=>{
-    console.log(`Server started on port ${8000}`);
-});
+
+
+    
+    
