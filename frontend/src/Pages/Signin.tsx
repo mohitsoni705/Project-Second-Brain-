@@ -1,26 +1,35 @@
-import  { useRef } from 'react'
+import  { useRef, useState } from 'react'
 import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../icons/Logo';
+import Loader from '../components/Loader';
 
 const Signin = () => {
-  const usernameRef = useRef<any>("");
+    const [loading , setLoading] = useState(false);
+   const usernameRef = useRef<any>("");
     const passwordRef = useRef<any>("");
     const navigate = useNavigate();
 
     async function signin(){
         const username = usernameRef.current?.value; 
         const password = passwordRef.current?.value;
-        const response = await axios.post(`${BACKEND_URL}/api/v1/signin`,{
+        try{
+            setLoading(true);  
+            const response = await axios.post(`${BACKEND_URL}/api/v1/signin`,{
                 username,
                 password
-        })
-        const jwt = response.data.token;
-        localStorage.setItem("token",jwt);
-        navigate("/dashboard");  
+            })
+            const jwt = response.data.token;
+            localStorage.setItem("token",jwt);
+            navigate("/dashboard");
+        }catch(err){
+            console.log(err);
+        }finally{
+            setLoading(false);
+        }
     }
   return (
     <div className='min-h-screen bg-gray-200 flex flex-row justify-center items-center'>
@@ -39,8 +48,8 @@ const Signin = () => {
                 <Input placeholder="Username" refrence={usernameRef}/>
                 <Input placeholder="Password"refrence={passwordRef}/>
                 <div className='flex justify-center pt-4'>
-                <Button variant="primary" 
-                text="Signin" size="md" fullWidth={true} onClick={signin} />
+                    {loading?<Loader/>:<Button variant="primary" 
+                    text="Signin" size="md" fullWidth={true} onClick={signin} />}
                 </div>
                 <div className='flex gap-1 p-2'>
                     <p className='text-gray-400 '>Create a new account </p>

@@ -5,7 +5,9 @@ import { BACKEND_URL } from '../config'
 import axios from 'axios' 
 import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '../icons/Logo'
+import Loader from '../components/Loader'
 const Signup = () => {
+    const [loading , setLoading] = useState(false);
     const [warning , setWarning]= useState(false);
     const usernameRef = useRef<any>("");
     const passwordRef = useRef<any>("");
@@ -15,14 +17,18 @@ const Signup = () => {
         const username = usernameRef.current?.value; 
         const password = passwordRef.current?.value;
         try{
+            setLoading(true);
             await axios.post(`${BACKEND_URL}/api/v1/signup`,{
                 username,
                 password
             })
             alert("You have signed up");
-            navigate("/signin")
+            navigate("/dashboard")
         }catch(err){
             setWarning(true);
+            console.log(err);
+        }finally{
+            setLoading(false);
         }
     }
   return (
@@ -43,9 +49,11 @@ const Signup = () => {
             <Input placeholder="Password"refrence={passwordRef}/>
             {warning?<span className='text-red-500 font-extralight ml-1.5'>Username already exist</span>:""}
             <div className='flex justify-center pt-4'>
+                {loading?<Loader/>:
+
             <Button variant="primary" 
             text="Signup" size="md" fullWidth={true} onClick={signup} />
-            </div>
+                }</div>
             <div className='flex gap-1 p-2'>
                 <p className='text-gray-400 '>Already have an account?</p>
                 <Link to="/signin" className='text-purple-400 font-semibold'>Login</Link>
