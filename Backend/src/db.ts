@@ -3,9 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-mongoose.set('bufferCommands', false);
 
-const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly?retryWrites=true&w=majority`;
+const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`;
 
 export const connectDB = async () => {
     try {
