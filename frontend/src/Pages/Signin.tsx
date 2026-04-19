@@ -6,6 +6,7 @@ import { BACKEND_URL } from '../config';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../icons/Logo';
 import Loader from '../components/Loader';
+import LogOutIcon from '../icons/LogOutIcon';
 
 const Signin = () => {
     const [loading , setLoading] = useState(false);
@@ -34,7 +35,7 @@ const Signin = () => {
   return (
     <div className='min-h-screen bg-gray-200 flex flex-row justify-center items-center'>
             <div className='bg-[#5046e4] h-screen hidden md:flex justify-center items-center flex-col w-full '>
-                <div className='text-black-600'><Logo size={6}/></div>
+                <div className='text-white'><Logo size="20" /></div>
                 <h1 className="font-bold text-6xl text-white">Brainly</h1>
                 <p className='text-white text-2xl mt-1 '>Build With ❤️</p>
                 <p className='text-white text-2xl '>By Mohit Parmar Soni</p>

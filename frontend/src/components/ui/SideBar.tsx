@@ -14,8 +14,8 @@ const SideBar = () => {
   return (
     <div className='h-screen bg-white border-r border-white shadow-xl w-72 fixed left-0 top-0 pl-4'>
       <div className="flex text-2xl pt-4 items-center">
-        <div className="pr-2 p-4 text-purple-600">
-        <Logo si={6}/>
+        <div className="pr-2 p-4 text-[#5046e4]">
+        <Logo size="6"/>
         </div>
         <p className="text-2xl font-semibold ">
         Brainly

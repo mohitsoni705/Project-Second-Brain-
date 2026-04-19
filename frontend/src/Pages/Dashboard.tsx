@@ -56,7 +56,7 @@ const handleLogoutButton=()=>{
       </div>
       {/* {side bar mobile nav} */}
       <div className="flex items-center justify-center gap-2 bg-gray-200 md:hidden p-3">
-        <div className='text-[#5046e4]'><Logo si={6}/></div>
+        <div className='text-[#5046e4]'><Logo size="6"/></div>
         <h1 className="font-bold text-[#5046e4] text-xl">Brainly</h1>
         <div className="text-[#5046e4]" onClick={handleLogoutButton}>
           <LogOutIcon/>
