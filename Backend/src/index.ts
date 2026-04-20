@@ -3,12 +3,12 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import { connectDB, ContentModel, LinkModel, UserModel } from './db.js';
 import mongoose from 'mongoose';
-import { JWT_PASSWORD } from './config.js'; 
+import { JWT_SECRET } from './config.js'; 
 import { UserMiddleware } from './middleware.js';
 import { random } from './utils.js';
 import cors from 'cors';
 
-const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
+// Secret moved to config.ts
 
 const app = express();
 app.use(express.json());
@@ -175,7 +175,7 @@ app.get("/api/v1/brain/:shareLink",async(req,res)=>{
         return;
     }
     //userId
-    const content = await ContentModel.findOne({
+    const content = await ContentModel.find({
         userId:link.userId
     })
     const user = await UserModel.findOne({
