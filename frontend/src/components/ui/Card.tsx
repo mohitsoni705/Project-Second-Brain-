@@ -8,7 +8,7 @@ interface CardProps{
     contentId:string,
     title:string,
     link:string,
-    type:"twitter"|"youtube"
+    type:string
 }
 export const Card = ({title,link , type , contentId}:CardProps) =>{
 

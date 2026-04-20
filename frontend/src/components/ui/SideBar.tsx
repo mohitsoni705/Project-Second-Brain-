@@ -4,8 +4,10 @@ import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { Button } from "./Button";
 import SidebarItem from "./SidebarItem";
+import { UserIcon } from "../../icons/LockIcon";
+import { AllIcon } from "../../icons/AllIcon";
 
-const SideBar = () => {
+const SideBar = ({ onFilterChange }: { onFilterChange?: (type: string) => void }) => {
   const navigate = useNavigate();
   const handleLogoutButton=()=>{
        localStorage.removeItem("token");
@@ -23,10 +25,13 @@ const SideBar = () => {
       </div>
         <div className="p-4 ">
           <div className="ml-1">
-          <SidebarItem text="Twitter" icon={<TwitterIcon/>}/>
+          <SidebarItem text="All" icon={<AllIcon/>} onClick={() => onFilterChange?.("all")} />
+          </div>
+          <div className="ml-1">
+          <SidebarItem text="Twitter" icon={<TwitterIcon/>} onClick={() => onFilterChange?.("twitter")} />
           </div>
           <div>
-          <SidebarItem text="Youtube" icon={<YoutubeIcon/>}/>
+          <SidebarItem text="Youtube" icon={<YoutubeIcon/>} onClick={() => onFilterChange?.("youtube")} />
           </div>
         </div>
           <Button variant="primary" text="Log out" size="md" onClick={handleLogoutButton}/>

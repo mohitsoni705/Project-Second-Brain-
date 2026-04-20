@@ -10,6 +10,7 @@ import LogOutIcon from '../icons/LogOutIcon';
 
 const Signin = () => {
     const [loading , setLoading] = useState(false);
+    const [error, setError] = useState("");
    const usernameRef = useRef<any>("");
     const passwordRef = useRef<any>("");
     const navigate = useNavigate();
@@ -26,8 +27,8 @@ const Signin = () => {
             const jwt = response.data.token;
             localStorage.setItem("token",jwt);
             navigate("/dashboard");
-        }catch(err){
-            console.log(err);
+        }catch(err:any){
+            setError(err.response?.data?.message || "Invalid credentials");
         }finally{
             setLoading(false);
         }
@@ -40,14 +41,19 @@ const Signin = () => {
                 <p className='text-white text-2xl mt-1 '>Build With ❤️</p>
                 <p className='text-white text-2xl '>By Mohit Parmar Soni</p>
             </div>
-            <div className='bg-blue-100 h-screen flex items-center justify-center w-full '>
+            <div className='bg-blue-100 h-screen flex flex-col gap-2 items-center justify-center w-full '>
             <div className='bg-white rounded-sm border border-blue-300 shadow-2xl min-w-48 p-8'>
+                <div className='md:hidden flex flex-row gap-2 items-center justify-center'>
+                    <div className='text-blue-700'><Logo size={6}/></div>
+                    <div className='text-2xl font-bold '>Brainly</div>
+                </div>
                 <div className='p-6'>
                 <h1 className='text-2xl items-center font-semibold text-center'>Login Account</h1>
                 <p className='text-gray-500 text-center font-extralight'>Sign in to continue Brainly</p>
                 </div>
                 <Input placeholder="Username" refrence={usernameRef}/>
                 <Input placeholder="Password"refrence={passwordRef}/>
+                {error && <span className='text-red-500 font-extralight ml-1.5'>{error}</span>}
                 <div className='flex justify-center pt-4'>
                     {loading?<Loader/>:<Button variant="primary" 
                     text="Signin" size="md" fullWidth={true} onClick={signin} />}

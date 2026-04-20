@@ -8,7 +8,7 @@ import { Logo } from '../icons/Logo'
 import Loader from '../components/Loader'
 const Signup = () => {
     const [loading , setLoading] = useState(false);
-    const [warning , setWarning]= useState(false);
+    const [warning , setWarning]= useState(""); 
     const usernameRef = useRef<any>("");
     const passwordRef = useRef<any>("");
     const navigate = useNavigate();
@@ -24,8 +24,8 @@ const Signup = () => {
             })
             alert("You have signed up");
             navigate("/dashboard")
-        }catch(err){
-            setWarning(true);
+        }catch(err:any){
+            setWarning(err.response?.data?.message || "Something went wrong");
             console.log(err);
         }finally{
             setLoading(false);
@@ -41,13 +41,17 @@ const Signup = () => {
         </div>
         <div className='bg-blue-100 h-screen flex items-center justify-center w-full '>
         <div className='bg-white rounded-sm border border-blue-300 shadow-2xl min-w-48 p-8'>
+            <div className='md:hidden flex flex-row gap-2 items-center justify-center'>
+                    <div className='text-blue-700'><Logo size={6}/></div>
+                    <div className='text-2xl font-bold '>Brainly</div>
+                </div>
             <div className='p-6'>
             <h1 className='text-2xl items-center font-semibold text-center'>Create an Account</h1>
             <p className='text-gray-500 text-center font-extralight'>Sign up to continue Brainly</p>
             </div>
             <Input placeholder="Username" refrence={usernameRef}/>
             <Input placeholder="Password"refrence={passwordRef}/>
-            {warning?<span className='text-red-500 font-extralight ml-1.5'>Username already exist</span>:""}
+            {warning?<span className='text-red-500 font-extralight ml-1.5'>{warning}</span>:""}
             <div className='flex justify-center pt-4'>
                 {loading?<Loader/>:
 

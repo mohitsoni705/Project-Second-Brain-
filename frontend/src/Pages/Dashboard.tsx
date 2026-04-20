@@ -16,6 +16,7 @@ export const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sharing, setSharing] = useState(false);
   const { contents, refresh } = useContent();
+  const [showCard , setShowCard] = useState("");
   const navigate = useNavigate();
 
   const handleShare = async () => {
@@ -31,8 +32,8 @@ export const Dashboard = () => {
           },
         }
       );
-
-      const shareUrl = `${window.location.origin}/share/${response.data.hash}`;
+      const hash = response.data.hash.trim();
+      const shareUrl = `${window.location.origin}/share/${hash}`;
       await navigator.clipboard.writeText(shareUrl);
 
       alert("Share link copied to clipboard!");
@@ -52,7 +53,7 @@ const handleLogoutButton=()=>{
       
       {/* Sidebar - hidden on mobile */}
       <div className="hidden md:block">
-        <SideBar />
+        <SideBar onFilterChange={(type) => setShowCard(type)} />
       </div>
       {/* {side bar mobile nav} */}
       <div className="flex items-center justify-center gap-2 bg-gray-200 md:hidden p-3">
@@ -95,15 +96,22 @@ const handleLogoutButton=()=>{
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {contents.map(({ title, type, link, _id }) => (
-            <Card
-              contentId={_id}
-              key={_id}
-              title={title}
-              type={type}
-              link={link}
-            />
-          ))}
+          {contents
+            .filter((content) => {
+              if (showCard === "all" || showCard === "") {
+                return true;
+              }
+              return content.type === showCard;
+            })
+            .map(({ title, type, link, _id }) => (
+              <Card
+                contentId={_id}
+                key={_id}
+                title={title}
+                type={type}
+                link={link}
+              />
+            ))}
         </div>
 
       </div>

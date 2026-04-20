@@ -2,8 +2,15 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 
+interface Content {
+    _id: string;
+    type: string;
+    title: string;
+    link: string;
+}
+
 export const useContent = ()=>{
-    const [contents , setContents ] = useState([]);
+    const [contents , setContents ] = useState<Content[]>([]);
     const refresh = ()=>{
         axios.get(`${BACKEND_URL}/api/v1/content`,{
             headers:{
