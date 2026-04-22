@@ -50,22 +50,7 @@ const handleLogoutButton=()=>{
   }
   return (
     <div className="flex flex-col">
-      
-      {/* Sidebar - hidden on mobile */}
-      <div className="hidden md:block">
-        <SideBar onFilterChange={(type) => setShowCard(type)} />
-      </div>
-      {/* {side bar mobile nav} */}
-      <div className="flex items-center justify-center gap-2 bg-gray-200 md:hidden p-3">
-        <div className='text-[#5046e4]'><Logo size="6"/></div>
-        <h1 className="font-bold text-[#5046e4] text-xl">Brainly</h1>
-        <div className="text-[#5046e4]" onClick={handleLogoutButton}>
-          <LogOutIcon/>
-        </div>
-      </div>
-      {/* Main Content */}
       <div className="flex-1 p-4 md:ml-72 min-h-screen bg-gray-200">
-        
         <CreateContentModal
           open={modalOpen}
           onClose={() => {

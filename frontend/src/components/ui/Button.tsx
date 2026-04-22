@@ -10,6 +10,7 @@ export interface ButtonProps{
     onClick ?:()=>void;
     fullWidth ?: boolean;
     loading?:boolean;
+    disabled?:boolean;
 }
 
 const variantStyles= {
@@ -25,7 +26,7 @@ const defaultStyles = "rounded-md flex px-4 py-2 font-normal justify-center curs
 
    
 export const Button = (props:ButtonProps) =>{
-    return<button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${props.fullWidth ? " w-full" : ""} ${props.loading ? ' opacity-40':""}`} disabled={props.loading} onClick={props.onClick}>
+    return<button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${props.fullWidth ? " w-full" : ""} ${props.loading ? ' opacity-40':""} ${props.disabled ? ' opacity-40 cursor-not-allowed pointer-events-none':""}`} disabled={props.loading || props.disabled} onClick={props.onClick}>
         {props.startIcon ?<div className="pr-2">{props.startIcon}</div>:null}{props.text}{props.endIcon}
         </button>
 }
