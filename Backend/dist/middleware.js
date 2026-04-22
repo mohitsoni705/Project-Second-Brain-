@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 export const UserMiddleware = (req, res, next) => {
+    const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
     const header = req.headers["authorization"];
     if (!header) {
         return res.status(401).json({ message: "No header" });

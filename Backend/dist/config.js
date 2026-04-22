@@ -1,2 +1,2 @@
-export const JWT_PASSWORD = "renu";
+export {};
 //# sourceMappingURL=config.js.map

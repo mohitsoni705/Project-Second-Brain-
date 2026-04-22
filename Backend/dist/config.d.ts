@@ -1,2 +1,2 @@
-export declare const JWT_PASSWORD = "renu";
+export {};
 //# sourceMappingURL=config.d.ts.map

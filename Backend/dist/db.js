@@ -2,16 +2,16 @@ import mongoose, { model, Schema } from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`;
-const connectDB = async () => {
+export const connectDB = async () => {
     try {
         await mongoose.connect(url);
-        console.log("Mongodb Connected!");
+        console.log("✅ MongoDB Connected!");
     }
     catch (e) {
-        console.log(e);
+        console.error("❌ MongoDB Error:", e.message);
+        process.exit(1);
     }
 };
-connectDB();
 const UserSchema = new Schema({
     username: { type: String, unique: true },
     password: { type: String },
@@ -19,13 +19,18 @@ const UserSchema = new Schema({
 const ContentSchema = new Schema({
     link: String,
     title: String,
-    tags: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
+    tags: [{ type: mongoose.Types.ObjectId, ref: "Tag" }],
     type: String,
-    userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true }
+    userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
 });
 const LinkSchema = new Schema({
     hash: String,
-    userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true, unique: true },
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+        required: true,
+        unique: true,
+    },
 });
 export const UserModel = model("User", UserSchema);
 export const LinkModel = model("Link", LinkSchema);

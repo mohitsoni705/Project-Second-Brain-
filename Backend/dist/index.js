@@ -1,16 +1,29 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { ContentModel, LinkModel, UserModel } from './db.js';
+import { connectDB, ContentModel, LinkModel, UserModel } from './db.js';
 import mongoose from 'mongoose';
-import { JWT_PASSWORD } from './config.js';
+// import { JWT_SECRET } from './config.js';
 import { UserMiddleware } from './middleware.js';
 import { random } from './utils.js';
 import cors from 'cors';
+// Secret moved to config.ts
 const JWT_SECRET = "asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54";
 const app = express();
 app.use(express.json());
 app.use(cors());
 console.log("MONGO_URL:", process.env.MONGO_URL);
+async function startSever() {
+    try {
+        await connectDB();
+        app.listen(8000, () => {
+            console.log(`Server started on port ${8000}`);
+        });
+    }
+    catch (err) {
+        console.error("Db Connection fail", err);
+    }
+}
+startSever();
 app.post("/api/v1/signup", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -103,6 +116,20 @@ app.delete("/api/v1/content/:id", UserMiddleware, async (req, res) => {
         message: "Content Has been deleted"
     });
 });
+app.get("/api/v1/content/:id", UserMiddleware, async (req, res) => {
+    const contentId = req.params.id;
+    const existingContent = await ContentModel.findOne({
+        _id: contentId
+    });
+    if (existingContent) {
+        const content = await ContentModel.findOne({
+            _id: contentId
+        });
+        res.json({
+            content
+        });
+    }
+});
 app.post("/api/v1/brain/share", UserMiddleware, async (req, res) => {
     const share = req.body.share;
     if (share) {
@@ -116,12 +143,14 @@ app.post("/api/v1/brain/share", UserMiddleware, async (req, res) => {
             });
             return;
         }
-        const hash = random(10);
+        const hash = random(10).trim();
+        console.log("hash", hash);
         await LinkModel.create({
             //@ts-ignore
             userId: req.userId,
             hash: hash
         });
+        console.log(hash);
         res.json({
             hash
         });
@@ -149,7 +178,7 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
         return;
     }
     //userId
-    const content = await ContentModel.findOne({
+    const content = await ContentModel.find({
         userId: link.userId
     });
     const user = await UserModel.findOne({
@@ -163,10 +192,7 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
     }
     res.json({
         username: user.username,
-        content: content
+        content: [...content]
     });
-});
-app.listen(8000, () => {
-    console.log(`Server started on port ${8000}`);
 });
 //# sourceMappingURL=index.js.map

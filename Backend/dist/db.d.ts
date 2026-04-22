@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+export declare const connectDB: () => Promise<void>;
 export declare const UserModel: mongoose.Model<{
     username?: string | null;
     password?: string | null;
@@ -26,7 +27,7 @@ export declare const UserModel: mongoose.Model<{
     password?: string | null;
 }, {
     id: string;
-}, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
+}, mongoose.DefaultSchemaOptions> & Omit<{
     username?: string | null;
     password?: string | null;
 } & {
@@ -35,25 +36,7 @@ export declare const UserModel: mongoose.Model<{
     __v: number;
 }, "id"> & {
     id: string;
-}, {
-    [path: string]: mongoose.SchemaDefinitionProperty<undefined, any, any>;
-} | {
-    [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
-        username?: string | null;
-        password?: string | null;
-    }, {
-        id: string;
-    }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
-        username?: string | null;
-        password?: string | null;
-    } & {
-        _id: mongoose.Types.ObjectId;
-    } & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-}, {
+}, unknown, {
     username?: string | null;
     password?: string | null;
 } & {
@@ -95,7 +78,7 @@ export declare const LinkModel: mongoose.Model<{
     hash?: string | null;
 }, {
     id: string;
-}, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
+}, mongoose.DefaultSchemaOptions> & Omit<{
     userId: mongoose.Types.ObjectId;
     hash?: string | null;
 } & {
@@ -104,25 +87,7 @@ export declare const LinkModel: mongoose.Model<{
     __v: number;
 }, "id"> & {
     id: string;
-}, {
-    [path: string]: mongoose.SchemaDefinitionProperty<undefined, any, any>;
-} | {
-    [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
-        userId: mongoose.Types.ObjectId;
-        hash?: string | null;
-    }, {
-        id: string;
-    }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
-        userId: mongoose.Types.ObjectId;
-        hash?: string | null;
-    } & {
-        _id: mongoose.Types.ObjectId;
-    } & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-}, {
+}, unknown, {
     userId: mongoose.Types.ObjectId;
     hash?: string | null;
 } & {
@@ -179,7 +144,7 @@ export declare const ContentModel: mongoose.Model<{
     title?: string | null;
 }, {
     id: string;
-}, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
+}, mongoose.DefaultSchemaOptions> & Omit<{
     tags: mongoose.Types.ObjectId[];
     userId: mongoose.Types.ObjectId;
     type?: string | null;
@@ -191,31 +156,7 @@ export declare const ContentModel: mongoose.Model<{
     __v: number;
 }, "id"> & {
     id: string;
-}, {
-    [path: string]: mongoose.SchemaDefinitionProperty<undefined, any, any>;
-} | {
-    [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
-        tags: mongoose.Types.ObjectId[];
-        userId: mongoose.Types.ObjectId;
-        type?: string | null;
-        link?: string | null;
-        title?: string | null;
-    }, {
-        id: string;
-    }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
-        tags: mongoose.Types.ObjectId[];
-        userId: mongoose.Types.ObjectId;
-        type?: string | null;
-        link?: string | null;
-        title?: string | null;
-    } & {
-        _id: mongoose.Types.ObjectId;
-    } & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-}, {
+}, unknown, {
     tags: mongoose.Types.ObjectId[];
     userId: mongoose.Types.ObjectId;
     type?: string | null;
