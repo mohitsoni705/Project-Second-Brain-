@@ -195,4 +195,21 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
         content: [...content]
     });
 });
+app.put("/api/v1/content/:id", UserMiddleware, async (req, res) => {
+    const contentId = req.params.id;
+    const title = req.body.title;
+    const link = req.body.link;
+    const type = req.body.type;
+    const existingContent = await ContentModel.findOne({
+        _id: contentId
+    });
+    if (existingContent) {
+        await ContentModel.updateOne({
+            _id: contentId
+        }, { $set: { _id: contentId, title: title, link: link, type: type } });
+        res.json({
+            "msg": "ContentUpdated"
+        });
+    }
+});
 //# sourceMappingURL=index.js.map
