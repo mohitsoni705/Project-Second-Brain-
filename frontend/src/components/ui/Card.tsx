@@ -3,14 +3,19 @@ import { DeleteIcon } from "../../icons/DeleteIcon"
 import { EditIcon } from "../../icons/EditIcon"
 import { ShareIcon } from "../../icons/ShareIcon"
 import { BACKEND_URL } from "../../config"
+import { useState } from "react"
+import type { EditData } from "../CreateContentModal"
 
 interface CardProps{
     contentId:string,
     title:string,
     link:string,
-    type:string
+    type:string,
+    onEdit?: (data: EditData) => void
 }
-export const Card = ({title,link , type , contentId}:CardProps) =>{
+
+export const Card = ({title,link , type , contentId, onEdit}:CardProps) =>{
+    const [toggle , setToggle]= useState(false);
 
     const handleDeletePostButton=async()=>{    
         await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`,{
@@ -20,23 +25,27 @@ export const Card = ({title,link , type , contentId}:CardProps) =>{
     }
     )   
     }
-    const handleShareLinkButton = async()=>{
-        const response = await axios.get(`${BACKEND_URL}/api/v1/content`)
+    const handleShareButton = ()=>{
+        navigator.clipboard.writeText(link);
+        alert("Video Link is copied to your board")
     }
-    return <div>
-        <div className="p-8 bg-white rounded-md border border-gray-200 max-w-72 min-h-48 transition-all ">
+    const handleEditButton = ()=>{
+        if (onEdit) onEdit({ contentId, title, link, type });
+    }
+    return <div className="flex justify-center items-center">
+        <div className="p-8 bg-white rounded-md border border-gray-200 max-w-72 min-h-48 transition-all items-center ">
             <div className="flex justify-between">
                 <div className="flex items-center text-md">
-                    <div className="pr-2 text-gray-500 cursor-pointer  hover:text-purple-600">
+                    {onEdit && <div className="pr-2 text-gray-500 cursor-pointer  hover:text-purple-600" onClick={handleEditButton}>
                     <EditIcon />
-                    </div>
+                    </div>}
                     {title}
                 </div>
                 <div className="flex items-center">
                 <div className="pr-2 text-gray-500 hover:text-purple-600">
-                    <a href="">
+                    <div onClick={handleShareButton}>
                     <ShareIcon size="lg"/>
-                    </a>
+                    </div>
                 </div>
                 <div className="pr-2 text-gray-500 cursor-pointer hover:text-purple-600" onClick={handleDeletePostButton}>
                     <DeleteIcon />
@@ -50,7 +59,6 @@ export const Card = ({title,link , type , contentId}:CardProps) =>{
                 <a href={link.replace("x.com","twitter.com")}></a>
                 </blockquote>}
         </div>
-            
         </div>
     </div>
 }

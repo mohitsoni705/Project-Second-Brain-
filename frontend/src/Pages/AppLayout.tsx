@@ -23,7 +23,7 @@ export const AppLayout=()=>{
           <LogOutIcon/>
         </div>
       </div>
-      <Outlet/>
+      <Outlet context={{showCard}}/>
         </>
     )
 }

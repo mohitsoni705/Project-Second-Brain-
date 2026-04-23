@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SideBar from "../components/ui/SideBar";
 import { CreateContentModal } from "../components/CreateContentModal";
+import type { EditData } from "../components/CreateContentModal";
 import { Button } from "../components/ui/Button";
 import { ShareIcon } from "../icons/ShareIcon";
 import { PlusIcon } from "../icons/PlusIcon";
@@ -10,15 +11,19 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Logo } from "../icons/Logo";
 import LogOutIcon from "../icons/LogOutIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+
+type ContextType = {
+  showCard: string;
+};
+
 
 export const Dashboard = () => {
+  const {showCard} = useOutletContext<ContextType>();
   const [modalOpen, setModalOpen] = useState(false);
+  const [editData, setEditData] = useState<EditData | null>(null);
   const [sharing, setSharing] = useState(false);
   const { contents, refresh } = useContent();
-  const [showCard , setShowCard] = useState("");
-  const navigate = useNavigate();
-
   const handleShare = async () => {
     try {
       setSharing(true);
@@ -44,19 +49,25 @@ export const Dashboard = () => {
       setSharing(false);
     }
   };
-const handleLogoutButton=()=>{
-       localStorage.removeItem("token");
-       navigate("/signin");
-  }
+
+  const handleEdit = (data: EditData) => {
+    setEditData(data);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setEditData(null);
+    refresh();
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex-1 p-4 md:ml-72 min-h-screen bg-gray-200">
         <CreateContentModal
           open={modalOpen}
-          onClose={() => {
-            setModalOpen(false);
-            refresh();
-          }}
+          onClose={handleModalClose}
+          editData={editData}
         />
 
         {/* Top Actions */}
@@ -67,7 +78,10 @@ const handleLogoutButton=()=>{
             startIcon={<PlusIcon size="md" />}
             size="sm"
             text="Add Content"
-            onClick={() => setModalOpen(true)}
+            onClick={() => {
+              setEditData(null);
+              setModalOpen(true);
+            }}
           />
 
           <Button
@@ -80,7 +94,7 @@ const handleLogoutButton=()=>{
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 mx-full lg:grid-cols-4 gap-4">
           {contents
             .filter((content) => {
               if (showCard === "all" || showCard === "") {
@@ -88,13 +102,14 @@ const handleLogoutButton=()=>{
               }
               return content.type === showCard;
             })
-            .map(({ title, type, link, _id }) => (
+            .map(({ title, type, link, _id}) => (
               <Card
                 contentId={_id}
                 key={_id}
                 title={title}
                 type={type}
                 link={link}
+                onEdit={handleEdit}
               />
             ))}
         </div>
