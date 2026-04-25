@@ -14,16 +14,23 @@ const Signup = () => {
     const navigate = useNavigate();
 
     async function signup(){
-        const username = usernameRef.current?.value; 
-        const password = passwordRef.current?.value;
+        const name = usernameRef.current?.value; 
+        const pass = passwordRef.current?.value;
+        const username = name.trim().toLowerCase();
+        const password = pass.trim().toLowerCase();
         try{
+            setWarning("");
             setLoading(true);
-            await axios.post(`${BACKEND_URL}/api/v1/signup`,{
-                username,
-                password
-            })
-            alert("You have signed up");
-            navigate("/dashboard")
+            if(username === "" || password === ""){
+                setWarning("Enter credentials");
+            }else{
+                await axios.post(`${BACKEND_URL}/api/v1/signup`,{
+                    username,
+                    password
+                })
+                alert("You have signed up");
+                navigate("/dashboard")
+            }
         }catch(err:any){
             setWarning(err.response?.data?.message || "Something went wrong");
             console.log(err);
@@ -51,7 +58,7 @@ const Signup = () => {
             </div>
             <Input placeholder="Username" refrence={usernameRef}/>
             <Input placeholder="Password"refrence={passwordRef}/>
-            {warning?<span className='text-red-500 font-extralight ml-1.5'>{warning}</span>:""}
+            {warning?<span className='text-red-500 ml-1.5'>{warning}</span>:""}
             <div className='flex justify-center pt-4'>
                 {loading?<Loader/>:
 

@@ -33,7 +33,7 @@ export const Card = ({title,link , type , contentId, onEdit}:CardProps) =>{
         if (onEdit) onEdit({ contentId, title, link, type });
     }
     return <div className="flex justify-center items-center">
-        <div className="p-8 bg-white rounded-md border border-gray-200 max-w-72 min-h-48 transition-all items-center ">
+        <div className="p-8 bg-white rounded-md border border-gray-200 w-full md:max-w-72 min-h-48 transition-all items-center ">
             <div className="flex justify-between">
                 <div className="flex items-center text-md">
                     {onEdit && <div className="pr-2 text-gray-500 cursor-pointer  hover:text-purple-600" onClick={handleEditButton}>

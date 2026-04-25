@@ -16,10 +16,16 @@ const Signin = () => {
     const navigate = useNavigate();
 
     async function signin(){
-        const username = usernameRef.current?.value; 
-        const password = passwordRef.current?.value;
+        const name = usernameRef.current?.value; 
+        const pass = passwordRef.current?.value;
+        const username = name.trim().toLowerCase();
+        const password = pass.trim().toLowerCase();
         try{
+            setError("");
             setLoading(true);  
+            if(username === "" || password.isEmpty ===""){
+                setError("Enter all credentials");
+            }else{
             const response = await axios.post(`${BACKEND_URL}/api/v1/signin`,{
                 username,
                 password
@@ -27,6 +33,7 @@ const Signin = () => {
             const jwt = response.data.token;
             localStorage.setItem("token",jwt);
             navigate("/dashboard");
+        }
         }catch(err:any){
             setError(err.response?.data?.message || "Invalid credentials");
         }finally{
