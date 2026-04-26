@@ -5,6 +5,7 @@ import { ShareIcon } from "../../icons/ShareIcon"
 import { BACKEND_URL } from "../../config"
 import { useState } from "react"
 import type { EditData } from "../CreateContentModal"
+import Loader, { Loader2 } from "../Loader"
 
 interface CardProps{
     contentId:string,
@@ -16,7 +17,7 @@ interface CardProps{
 
 export const Card = ({title,link , type , contentId, onEdit}:CardProps) =>{
     const [toggle , setToggle]= useState(false);
-
+    const [loading , setLoading] = useState(false);
     const handleDeletePostButton=async()=>{    
         await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`,{
          headers:{
@@ -48,7 +49,9 @@ export const Card = ({title,link , type , contentId, onEdit}:CardProps) =>{
                     </div>
                 </div>
                 <div className="pr-2 text-gray-500 cursor-pointer hover:text-purple-600" onClick={handleDeletePostButton}>
-                    <DeleteIcon />
+                    <span onClick={()=>{setLoading(true)}}>
+                    {loading?<Loader2/>:<DeleteIcon/>}
+                    </span>
                 </div>
                 </div>
             </div>

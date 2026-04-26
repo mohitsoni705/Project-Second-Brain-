@@ -1,5 +1,12 @@
 import React from 'react'
 
+export const Loader2=()=>{
+  return(
+         <div className="flex justify-center items-center">
+                        <div className=" w-5 h-5 border-4 border-[#5046e4] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+  )
+}
 const Loader = () => {
   return (
 <div className="flex flex-row gap-2">
