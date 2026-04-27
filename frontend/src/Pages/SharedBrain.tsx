@@ -46,7 +46,7 @@ export const SharedBrain = () => {
             <div className="flex-1 p-4 md:ml-72 min-h-screen bg-gray-200">
 
                 {/* Shared Brain Banner */}
-                <div className="bg-gradient-to-r from-purple-600 to-indigo-500 text-white rounded-xl p-5 mb-4 shadow-md">
+                <div className="bg-gradient-to-r from-[#5046e4] to-indigo-500 text-white rounded-xl p-5 mb-4 shadow-md">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-2xl font-bold tracking-tight">🧠 Shared Brain</h1>
                         <p className="text-purple-100 text-sm">
@@ -80,7 +80,7 @@ export const SharedBrain = () => {
                 {/* Loading State */}
                 {loading && (
                     <div className="flex justify-center items-center h-48">
-                        <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 border-4 border-[#5046e4] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 )}
 

@@ -54,6 +54,9 @@ export const Dashboard = () => {
     setEditData(data);
     setModalOpen(true);
   };
+  const handleDelete =()=>{
+    refresh;
+  }
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -110,6 +113,7 @@ export const Dashboard = () => {
                 type={type}
                 link={link}
                 onEdit={handleEdit}
+                onDelete={handleDelete}
               />
             ))}
         </div>
