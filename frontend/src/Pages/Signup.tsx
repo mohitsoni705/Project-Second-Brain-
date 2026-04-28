@@ -17,7 +17,7 @@ const Signup = () => {
         const name = usernameRef.current?.value; 
         const pass = passwordRef.current?.value;
         const username = name.trim().toLowerCase();
-        const password = pass.trim().toLowerCase();
+        const password = pass;
         try{
             setWarning("");
             setLoading(true);

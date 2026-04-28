@@ -3,7 +3,7 @@ import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useAsyncError, useNavigate } from 'react-router-dom';
 import { Logo } from '../icons/Logo';
 import Loader from '../components/Loader';
 import LogOutIcon from '../icons/LogOutIcon';
@@ -19,7 +19,9 @@ const Signin = () => {
         const name = usernameRef.current?.value; 
         const pass = passwordRef.current?.value;
         const username = name.trim().toLowerCase();
-        const password = pass.trim().toLowerCase();
+        const password = pass;
+        const [active  , setActive] = useState(true);
+
         try{
             setError("");
             setLoading(true);  

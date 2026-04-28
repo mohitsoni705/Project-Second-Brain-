@@ -1,10 +1,36 @@
-import type { ReactElement } from "react";
+import { useState, type ReactElement } from "react";
+import { EyeCloseIcon } from "../../icons/EyeIcon";
+import { EyeOpenIcon } from "../../icons/EyeIcon";
 
+interface InputProps {
+    placeholder: string,
+    refrence: any,
+    startIcon?: ReactElement,
+}
 
-export const Input = ({placeholder, refrence , startIcon }:{ placeholder:string; refrence:any; startIcon?:ReactElement})=>{
-    return <div>
-        <div className="">
-            <input type={"text"} ref={refrence} placeholder={placeholder} className="px-4 py-2 border rounded m-2 border-[#5046e4] focus:outline-blue-300 w-full "/>
+interface EyeToggleProps {
+    active: boolean;
+    onToggle: () => void;
+}
+
+export const EyeToggle = ({ active, onToggle }: EyeToggleProps) => {
+    return (
+        <span onClick={onToggle}>
+            {active ? <EyeOpenIcon /> : <EyeCloseIcon />}
+        </span>
+    );
+};
+
+export const Input = ({ placeholder, refrence, startIcon }: InputProps) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const type = placeholder === "Password" ? (showPassword ? "text" : "password") : "text";
+
+    return (
+        <div>
+            <div className="flex flex-row items-center border rounded border-[#8d87e0a9] outline-blue-300 m-2 p-2">
+                <input type={type} ref={refrence} placeholder={placeholder} className="focus:outline-none" name={placeholder} />
+                {placeholder === "Password" ? <EyeToggle active={showPassword} onToggle={() => setShowPassword(!showPassword)} /> : ""}
+            </div>
         </div>
-    </div>
-} 
+    );
+}; 
