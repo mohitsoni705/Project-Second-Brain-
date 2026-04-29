@@ -9,7 +9,7 @@ import { random } from './utils.js';
 import cors from 'cors';
 
 // Secret moved to config.ts
-const JWT_SECRET ="asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54"
+const JWT_SECRET = process.env.JWT_SECRET as string;
 const app = express();
 app.use(express.json());
 app.use(cors());

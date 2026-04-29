@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export const UserMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const JWT_SECRET ="asdfghjklqwertyuiopzxcvbnm64fdgdfsgd5g4s65g4sd5f4g5g4s54"
+    const JWT_SECRET = process.env.JWT_SECRET as string;
     const header = req.headers["authorization"];
     
     if (!header) {

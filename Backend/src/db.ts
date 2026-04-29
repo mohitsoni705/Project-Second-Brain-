@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
-const url = `mongodb+srv://mohitsoni3820_db_user:m0hit@mohitcluster.dixlj3c.mongodb.net/brainly`;
-
+const MongoUrl = process.env.MONGO_URL;
+const url = `${MongoUrl}brainly`;
+console.log(MongoUrl);
 export const connectDB = async () => {
     try {
         await mongoose.connect(url);

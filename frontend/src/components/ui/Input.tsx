@@ -27,7 +27,7 @@ export const Input = ({ placeholder, refrence, startIcon }: InputProps) => {
 
     return (
         <div>
-            <div className="flex flex-row items-center border rounded border-[#8d87e0a9] outline-blue-300 m-2 p-2">
+            <div className="flex flex-row items-center justify-between border rounded border-[#8d87e0a9] outline-blue-300 m-2 p-2">
                 <input type={type} ref={refrence} placeholder={placeholder} className="focus:outline-none" name={placeholder} />
                 {placeholder === "Password" ? <EyeToggle active={showPassword} onToggle={() => setShowPassword(!showPassword)} /> : ""}
             </div>

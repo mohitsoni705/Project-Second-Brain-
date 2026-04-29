@@ -17,10 +17,8 @@ const Signin = () => {
 
     async function signin(){
         const name = usernameRef.current?.value; 
-        const pass = passwordRef.current?.value;
+        const password = passwordRef.current?.value;
         const username = name.trim().toLowerCase();
-        const password = pass;
-        const [active  , setActive] = useState(true);
 
         try{
             setError("");
