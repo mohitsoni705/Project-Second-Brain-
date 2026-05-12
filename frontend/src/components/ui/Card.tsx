@@ -3,11 +3,11 @@ import { DeleteIcon } from "../../icons/DeleteIcon"
 import { EditIcon } from "../../icons/EditIcon"
 import { ShareIcon } from "../../icons/ShareIcon"
 import { BACKEND_URL } from "../../config"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { EditData } from "../CreateContentModal"
 import Loader, { Loader2 } from "../Loader"
 import CopyIcon from "../../icons/CopyIcon"
-
+import CheckIcon from "../../icons/CheckIcon"
 interface CardProps{
     contentId:string,
     title:string,
@@ -20,6 +20,8 @@ interface CardProps{
 export const Card = ({title,link , type , contentId, onEdit , onDelete}:CardProps) =>{
     const [toggle , setToggle]= useState(false);
     const [loading , setLoading] = useState(false);
+    const [checked , setChecked ] = useState(false);
+
     const handleDeletePostButton=async()=>{    
         await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`,{
          headers:{
@@ -30,7 +32,12 @@ export const Card = ({title,link , type , contentId, onEdit , onDelete}:CardProp
     }
     const handleShareButton = ()=>{
         navigator.clipboard.writeText(link);
-        alert("Video Link is copied to your board")
+        // alert("Video Link is copied to your board")
+        setChecked(true);
+        setTimeout(() => {
+            setChecked(false);
+        }, 1000);
+        
     }
     const handleEditButton = ()=>{
         if (onEdit) onEdit({ contentId, title, link, type });
@@ -39,7 +46,7 @@ export const Card = ({title,link , type , contentId, onEdit , onDelete}:CardProp
     return <div className="flex justify-center items-center">
         <div className="p-8 bg-white rounded-md border border-gray-200 w-full md:max-w-72 min-h-48 transition-all items-center ">
             <div className="flex justify-between">
-                <div className="flex items-center text-md">
+                <div className="flex items-center text-md ">
                     {onEdit && <div className="pr-2 text-gray-500 cursor-pointer  hover:text-[#5046e4]" onClick={handleEditButton}>
                     <EditIcon />
                     </div>}
@@ -48,7 +55,7 @@ export const Card = ({title,link , type , contentId, onEdit , onDelete}:CardProp
                 <div className="flex items-center">
                 <div className="pr-2 text-gray-500 hover:text-[#5046e4]">
                     <div onClick={handleShareButton}>
-                    <CopyIcon/>
+                        {checked?<CheckIcon/>:<CopyIcon/>}
                     </div>
                 </div>
                 {onDelete && 
